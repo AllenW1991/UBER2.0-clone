@@ -1,15 +1,26 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Map from '../components/Map'
 import { createStackNavigator } from '@react-navigation/stack'
 import NavigateCard from '../components/NavigateCard'
 import RideOptionsCard from '../components/RideOptionsCard'
+import { Icon } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native'
 
 const MapScreen = () => {
   const Stack = createStackNavigator()
+  const navigation = useNavigation()
 
   return (
     <View>
+      <TouchableOpacity
+        className="absolute bg-white shadow-lg z-50 p-3 rounded-full top-9 left-4"
+        onPress={() => {
+          navigation.navigate('HomeScreen')
+        }}
+      >
+        <Icon name="menu" />
+      </TouchableOpacity>
       <View className="h-1/2">
         <Map />
       </View>
