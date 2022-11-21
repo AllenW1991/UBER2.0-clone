@@ -1,7 +1,9 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
+import { FlatList } from 'react-native-gesture-handler'
+import { useState } from 'react'
 
 const data = [
   {
@@ -13,27 +15,27 @@ const data = [
   {
     id: 'UBER-XL-456',
     title: 'UBER XL',
-    mutiplier: 1,
+    mutiplier: 1.2,
     image: 'https://links.papareact.com/5w8',
   },
   {
     id: 'UBER-LUX-789',
     title: 'UBER LUX',
-    mutiplier: 1,
+    mutiplier: 1.75,
     image: 'https://links.papareact.com/7pf',
   },
 ]
 
 const RideOptionsCard = () => {
   const navigation = useNavigation()
+  const [selected, setSelected] = useState(null)
 
   return (
-    <SafeAreaView className="bg-white flex-grow">
+    <SafeAreaView className="bg-white flex-grow ">
       <View>
         <TouchableOpacity
           className="absolute top-7 left-5 z-50"
           onPress={() => {
-            console.log(' you hit me')
             navigation.navigate('NavigateCard')
           }}
         >
@@ -41,6 +43,27 @@ const RideOptionsCard = () => {
         </TouchableOpacity>
         <Text className="text-center py-5 text-xl">Select a Ride</Text>
       </View>
+
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              setSelected(item)
+              console.log(selected)
+            }}
+            className="`flex-row items-center justify-between p-3`"
+          >
+            <Image className="w-24 h-16" source={{ uri: item.image }} />
+            <View className="-ml-7">
+              <Text className="text-lg font-semibold">{item.title}</Text>
+              <Text className="text-xs">Travel Time...</Text>
+            </View>
+            <Text className="text-md font-semibold">$300</Text>
+          </TouchableOpacity>
+        )}
+      />
     </SafeAreaView>
   )
 }
